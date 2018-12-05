@@ -1,0 +1,13 @@
+doctrine:
+    orm:
+        mappings:
+            PiedWebReservationBundle:
+                type: annotation
+                dir: 'Entity'
+                alias: PiedWebReservation
+        resolve_target_entities:
+            PiedWeb\ReservationBundle\Entity\OrderInterface:        '%app.entity_order%'
+            PiedWeb\ReservationBundle\Entity\OrderItemInterface:    '%app.entity_order_item%'
+            PiedWeb\ReservationBundle\Entity\BasketInterface:       '%app.entity_basket%'
+            PiedWeb\ReservationBundle\Entity\BasketItemInterface:   '%app.entity_basket_item%'
+            PiedWeb\ReservationBundle\Entity\ProductInterface:      '%app.entity_product%'

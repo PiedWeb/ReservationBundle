@@ -1,0 +1,126 @@
+paiementMethod:
+    invalid: Avez-vous selectionner un des moyens de paiment proposés ? (si l'erreur persiste, contactez-nous)
+
+reservation:
+    reserve: Réserver
+    from: A partir de
+    photos: Photos
+    faq: Questions
+    full: Malheuresement, il n'y a plus de place. Quelqu'un a peut-être été plus rapide dans le processus de paiment.<br><a href="/#contact" data-todo>Contactez-nous pour trouver une autre solution</a>.
+
+invoice:
+    reference: Référence
+    title: Facture à l'attention de
+    paid:  Payé
+    waitingForPaiement: En attente de paiement
+    unit_price_ht: Prix Unitaire HT
+    vat: TVA
+    unit_price: Prix Unitaire
+    quantity:   Quantité
+    total:      Total
+    total_ht:   Total HT
+    total_vat:  Total TVA
+    description: Description
+
+user:
+    city:
+        short: Trop court
+        long: Trop long
+        invalid: Non valide
+    firstname:
+        invalid: Non valide
+    lastname:
+        short: Trop court
+        long: Trop long
+        invalid: Non valide
+    dateOfBirth:
+        young: Vous semblez trop jeune pour procéder à une réservation
+    phone:
+        short: Trop court
+        long: Trop long
+
+admin:
+    product:
+        access_form: Form. d'inscription
+        access_list: Participants
+
+        departureDate:
+          help: "Si votre sortie s'étale sur plusieurs jours, indiquez le premier jour"
+          label: Date
+        description:
+          help: "A remplir uniquement si votre produit diffère des autres produits présentées sur la même page."
+          label: "Description unique/Spécificité de ce produit"
+        info: "Informations Globales"
+        inscription: Inscription
+        name:
+          help: "Le nom de votre sortie apparaîtra entre autre apparaîtra lors de la facturation"
+          label: "Nom (ex: Sortie Taratata du 1er Janvier 21)"
+          short_label: "Nom"
+        page:
+          help: "Page sur laquelle sera présentée votre produit"
+          label: "Landing Page"
+        participantNumber:
+          help: "A remplir uniquement si votre produit diffère des autres produits présentées sur la même page."
+          label: "Nbre max de participants"
+        vat:
+          label: TVA
+          help: "En %"
+        price:
+          help: "Hors Taxe"
+          label: Prix
+        time:
+          help: "En Jour (Valeur possible : 1/2, 1, 2, 3, ..., 12...)"
+          label: Durée
+
+    label:
+        basket: Dans les paniers
+        label: Réservations
+        order: Commandes
+        orderItem: "Liste des participants"
+        product: Sorties
+
+    order:
+        invoice: Facture
+        informations: Informations
+        details: Details
+        canceling: Annulation
+        user:
+            help:  Compte utilisée pour passer la commande
+            label: Utilisateur
+        orderItem:
+            label: Sorties Réservées
+        paiementMethod:
+            label: Moyen de paiement
+        paid:
+            label: Payé
+        orderedAt:
+            label: Commandé le
+        canceledAt:
+            label:  Annulé le
+        refund:
+            label: Remboursé
+
+
+    order_item:
+        order:
+            label: Commande associée
+        product:
+            label: Sortie Réservée (nom)
+        product_id:
+            label: Sortie Réservée (id)
+        price:
+            label: Prix HT
+            help: '<span class="text-danger">Modification déconseillée</span>'
+        vat:
+            label: TVA
+            help: '<span class="text-danger">Modification déconseillée</span>'
+        canceledAt:
+            label: Annulé le
+
+    basket_item:
+        user:
+            label: Compte associé
+        basket_id:
+            label: Identifiant du Panier
+        addedAt:
+            label: Ajouté le

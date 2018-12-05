@@ -1,0 +1,76 @@
+<p><small>En passant votre commande, vous acceptez les <a href="{{ path('piedweb_cms_page', {slug: 'cgv'}) }}">conditions générales de vente</a>.</small></p>
+<div class="row text-left">
+    <div class="col-sm-12 col-md-7">
+        <h2 class="mb-40">Récapitulatif</h2>
+
+        <div>
+            <h3 class="mt-20 mb-10">Détails</h3>
+            <table class=table>
+                <tr>
+                    <th>Réservation</th>
+                    <th>Prix</th>
+                </tr>
+            {% for productName, basketItems in (basket.basketItems is defined ? basket.basketItems : basket.orderItems)|group_by(=> _.product.name) %}
+                <tr>
+                    <td colspan="2" class="font-weight-bold">{{ productName }}</td>
+                </tr>
+                {% for p in basketItems %}
+                <tr>
+                    <td>
+                        {{ p.firstname }} {{ p.lastname }} {% if p.dateOfBirth is not null %}<br>
+                        <small>Date de naissance: {{ p.dateOfBirth|date("d/m/Y") }}) {% endif %}</small><br>
+                        <small>Contact: {{ p.email }} / {{ p.phone }}</small><br>
+                        <small><a href="{{ path('piedweb_reservation_delete_basket_item', {id: p.id, from: 5}) }}" class=text-color><i class="fa fa-trash"></i> Enlever</a></small>
+                    </td>
+                    <td style="vertical-align: middle;">{{ p.price }}€</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+            </table>
+
+            <p><a href="{{ path('piedweb_reservation_step_4') }}">Modifier</a></p>
+        </div>
+
+        <div class="mb-10">
+            <h3 class="mt-20 mb-10">Informations</h3>
+            Une convocation avec l'heure et le lieu de rendez-vous vous sera automatiquement transmise à l'issu du paiement.
+        </div>
+
+
+    </div>
+    <div class="col-sm-12 col-md-5 align-self-start" style="border: 2px solid rgba(0,0,0, 0.5); padding: 20px; border-radius:15px;">
+
+
+            <p class="mt-40 info font-weight-bold">Montant total : <span class="float-right d-block">EUR {{ basket.price }}</span></p>
+        <hr>
+
+        <h3 class="mt-40 mb-40 text-center">Choisir un moyen de paiement</h3>
+
+
+        {{ form_start(form) }}
+        <div class="mb-40 mt-40">
+
+
+            <div class="col-sm-12">
+                <small>Paiement immédiat via Paypal :</small>
+                <button class="btn btn-primary text-center" id="form_creditcard" name="form[creditcard]" style="width:100%;font-size:24px !important">
+                    <span class="p-i cb-icon"></span>
+                    <i class="fa fa-credit-card"></i> <br> Carte de Crédit
+                </button>
+            </div>
+            <br>
+            <div class="col-sm-12">
+                <small>Paiement le jour de la sortie:</small>
+                <button class="btn btn-secondary text-center" id="form_espece" name="form[espece]" style="font-size:24px !important;width:100%">
+                    <span class="p-i espece-icon"></span> {# todo btn btn-link #}
+                    <i class="fa fa-money"></i> <br> Espèce
+                </button>
+            </div>
+
+        </div>
+        {{ form_widget(form._token) }}
+        </form>
+
+    </div>
+
+</div>

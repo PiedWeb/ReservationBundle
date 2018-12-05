@@ -1,0 +1,100 @@
+{% extends '@PiedWebCMS/base.html.twig' %}
+
+{% block title %}Facture {{ order.id }}{% endblock %}
+
+{% block body %}
+
+<div class="container">
+   <div class="card">
+      <div class="card-header" style="-webkit-print-color-adjust: exact;">
+          <strong>{{ order.orderedAt|localizeddate('long', 'none') }}</strong>
+
+          <span class="float-right">
+          {% if order.paidAt %}
+            {{ ('invoice.paid'|trans)~' '~order.paidAt|localizeddate('long', 'none') }}
+          {% else %}
+            <a href="{{ path('piedweb_reservation_step_5_bis', {'id': order.id}) }}">{{ 'invoice.waitingForPaiement'|trans }}</a>
+          {%endif %}
+      </div>
+      <div class="card-body">
+         <div class="row mb-4">
+            <div class="col-sm-6">
+                <div class="mb-2"><em>{{ 'invoice.title'|trans }}</em></div>
+                <div class=ml-3>
+                   <div>
+                      <strong>{{ order.user.lastname }} {{ order.user.firstname }}</strong>
+                   </div>
+                   <div>{{'admin.user.email.label'|trans }}: {{ order.user.email }}</div>
+                   <div>{{'admin.user.phone.label'|trans }}: {{ order.user.phone }}</div>
+                </div>
+                <div class="mt-2"><strong>{{ 'invoice.reference'|trans }}</strong>: #{{ order.id }}</div>
+            </div>
+            <div class="col-sm-6" style="background-color:#F5F5F5; border-radius:5px;border:2px solid #D3D3D3; padding: 10px;-webkit-print-color-adjust: exact;">
+               <div>
+                  <strong><a class="navbar-brand" href="index.html" style="background-color:rgba(0,0,0,0.5); border-radius:5px; -webkit-print-color-adjust: exact;">Pied Web</a></strong>
+               </div>
+               <div></div>
+               <div>38 112 Autrans-Méaudre en Vercors</div>
+               <div>{{'admin.user.email.label'|trans }}: contact@piedweb.com</div>
+            </div>
+         </div>
+         <div class="table-responsive-sm">
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th>{{'invoice.description'|trans }}</th>
+                     <th class="right">{{'invoice.unit_price_ht'|trans }}</th>
+                     <th class="right">{{'invoice.vat'|trans }}</th>
+                     <th class="right">{{'invoice.unit_price'|trans }}</th>
+                     <th class="center">{{'invoice.quantity'|trans }}</th>
+                     <th class="right">{{'invoice.total'|trans }}</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for item in invoiceItems %}
+                  <tr>
+                     <td class="left strong">{{ item.name }}</td>
+                     <td class="right">{{ item.unit_price_ht }}€</td>
+                     <td class="right">{{ item.vat }}%</td>
+                     <td class="right">{{ item.unit_price }}€</td>
+                     <td class="center">{{ item.quantity }}</td>
+                     <td class="right">{{ item.price }}€</td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+         <div class="row">
+            <div class="col-lg-4 col-sm-5">
+            </div>
+            <div class="col-lg-4 col-sm-5 ml-auto">
+               <table class="table table-clear">
+                  <tbody>
+                     <tr>
+                        <td class="left">
+                           {{ 'invoice.total_ht'|trans }}
+                        </td>
+                        <td class="right">{{ total_ht }}€</td>
+                     </tr>
+                     <tr>
+                        <td class="left">
+                           {{ 'invoice.total_vat'|trans }}
+                        </td>
+                        <td class="right">{{ total_vat }}€</td>
+                     </tr>
+                     <tr>
+                        <td class="left">
+                           <strong>{{ 'invoice.total'|trans }}</strong>
+                        </td>
+                        <td class="right">
+                           <strong>{{ total }}€</strong>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

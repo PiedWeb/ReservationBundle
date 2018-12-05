@@ -1,0 +1,60 @@
+# Loot at ReservationController for more detailled
+
+manage:
+    resource: '@PiedWebReservationBundle/Resources/config/routes/manage.yaml'
+
+piedweb_reservation:
+    path:     /reservation/1/{id}
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_1
+    methods:    [GET, HEAD, POST]
+    requirements:
+        id: '[0-9]+'
+
+piedweb_reservation_step_2:
+    path:     /reservation/2/{id}
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_2
+    methods:    [GET, HEAD, POST]
+    requirements:
+        id: '[0-9]+'
+
+piedweb_reservation_step_3_register:
+    path:     /reservation/register/
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_3_register
+    methods:    [GET, HEAD, POST]
+
+piedweb_reservation_step_4:
+    path:     /reservation/4/{previous}
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_4
+    methods:    [GET, HEAD, POST]
+    requirements:
+        previous: '[0-9]*'
+    defaults:
+        previous: '0'
+
+piedweb_reservation_step_5:
+    path:     /reservation/5
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_5
+    methods:    [GET, HEAD, POST]
+
+piedweb_reservation_step_5_bis:
+    path:     /reservation/5/{id}
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_5_bis
+    methods:    [GET, HEAD, POST]
+    requirements:
+        id: '[0-9]+'
+
+piedweb_reservation_step_6:
+    path:     /reservation/6/{id}
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_6
+    methods:    [GET]
+    requirements:
+        id: '[0-9]+'
+
+piedweb_reservation_delete_basket_item:
+    path:     /reservation/delete/{id}/{from}
+    controller: PiedWeb\ReservationBundle\Controller\ReservationController::deleteBasketItem
+    methods:    [GET, HEAD, POST]
+    requirements:
+        from: '[0-9]*'
+    defaults:
+        from: '0'

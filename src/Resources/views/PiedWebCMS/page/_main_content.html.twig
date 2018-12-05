@@ -1,0 +1,44 @@
+{% extends '@!PiedWebCMS/page/_main_content.html.twig' %}
+
+{% block after_content %}
+
+    {% if page.issetProduct is defined and page.issetProduct == true %}
+
+        {% if page.issetProducts is same as(false) %}
+            {% set product = page.products.0 %}
+        {% endif %}
+
+        <div class="mt-5 text-center">
+
+        {% if product is not defined or (product.participantNumber is not null and product.participantNumber > 0  and product.participants.count < product.participantNumber) %}
+
+            {% if page.issetProducts == false  %}
+            <div class="btn-group btn-group-lg">
+                <span data-href="{{ path('piedweb_reservation', {'id' : page.products.0.id}) }}" class="btn btn-lg btn-outline-secondary">
+                    {{ page.smallerPrice|number_format(2, ',', ' ') }}€
+                </span>
+            {% endif %}
+
+                <span data-href="{% if page.issetProducts == false %}{{ path('piedweb_reservation', {'id' : page.products.0.id}) }}{% else %}#reserve{% endif %}" class="{% if page.issetProducts %}btn btn-lg btn-outline-secondary{% else %}btn btn-primary letter-spacing{% endif %}">
+                    {{ 'reservation.reserve'|trans }}
+                    {% if page.issetProducts %}à partir de {{ page.smallerPrice|number_format(2, ',', ' ') }}€{% endif %}
+                </span>
+
+
+           {% if page.issetProducts == false  %}</div>{% endif %}
+
+        {% else %}
+            {% include '@PiedWebReservation/page/_max_participant.html.twig' %}
+        {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+    {% if page.issetProducts is defined and page.issetProducts == false %}
+        {% set ok = true %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

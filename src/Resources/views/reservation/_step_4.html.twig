@@ -1,0 +1,40 @@
+<div class="text-left" style="max-width:250px; margin:auto; padding-bottom:20px">
+
+{% if subtitle is not null %}
+    {{ subtitle|raw }}
+{% endif %}
+
+{% for key, form in forms %}
+{% if loop.first %}{{ form_start(form) }}{% endif %}
+    <h2 class="mt-30 mb-10 h4" id="{{ formDataComplement[key].id }}">
+        {% if formDataComplement[key].forMe %}
+            Moi
+        {% else %}
+            {% if forms|length < 2 %}Autre Participant{% else %}Participant {{ loop.index }}{% endif %}
+        {% endif %}
+    </h2>
+
+    <hr>
+    <div class=text-right style="margin-top:-10px; margin-bottom:10px;">
+        <small><a href="{{ path('piedweb_reservation_delete_basket_item', {id: formDataComplement[key].id, from: 4}) }}" class=text-color><i class="fa fa-trash"></i> Enlever ce participant</a></small>
+    </div>
+
+    {% if forDifferentItem %}<div class="mb-20 h5">{{ formItemLabel[key]  }}</div>{% endif %}
+    {{ form_row(form.lastname, {label: 'Nom'}) }}
+    {{ form_row(form.firstname, {label: 'Prénom'}) }}
+    {{ form_row(form.dateOfBirth, {label: 'Date de naissance'}) }}
+    {{ form_row(form.phone, {label: 'Téléphone'}) }}
+    {{ form_row(form.email, {label: 'Email'}) }}
+    {{ form_row(form.city, {label: 'Ville'}) }}
+    {{ form_rest(form) }}
+
+    {% if loop.last %}
+      <button type="submit" class="btn btn-info">Valider</button>
+
+{{ form_end(form) }}
+    {% endif %}
+
+    <div>
+    </div>
+{% endfor %}
+</div>

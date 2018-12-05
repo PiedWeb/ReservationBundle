@@ -1,0 +1,18 @@
+<section class="mt-20">
+    <div class="container text-center">
+        {% if step matches '/^\\d+$/' %}
+            <h1 class="mb-40">Réservation {% if step != 6 %}{{ step }}/5{% else %}finalisée{% endif %}</h1>
+        {% endif %}
+
+
+
+    <div class="mt-20 row">
+        <div class="col-12">
+            {% include ('@PiedWebCMS/component/flash_message.html.twig') %}
+        </div>
+    </div>
+
+
+        {% include '@PiedWebReservation/reservation/_step_' ~ step ~ '.html.twig' %}
+    </div>
+</section>

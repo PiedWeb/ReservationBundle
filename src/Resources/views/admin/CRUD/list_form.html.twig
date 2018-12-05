@@ -1,0 +1,4 @@
+<a class="btn btn-sm btn-default edit_link" href="{{ path('admin_piedweb_reservation_orderitem_list', {
+  'filter[product__id][value]': object.id
+}) }}"><i class="fa fa-list"></i> {{ 'admin.product.access_list'|trans }}</a>
+<a class="btn btn-sm btn-default edit_link" href="{{ path('piedweb_reservation', {'id': object.id}) }}"><i class="fa fa-user-plus"></i> {{ 'admin.product.access_form'|trans }}</a>

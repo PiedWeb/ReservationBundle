@@ -1,0 +1,12 @@
+{% extends '@PiedWebReservation/reservation/reservation.html.twig' %}
+
+{% block title %}Réservation{% endblock %}
+
+{% block content %}
+    <section class="section-gap">
+        <div class="container text-center">
+            <h1 class="mb-40">{{ 'Aucune réservation en cours'|trans }}</h1>
+            <p><a class="btn btn-primary" href="{{ path('piedweb_cms_homepage') }}">Voir les prochaines sorties</a> <a class="btn btn-secondary" href="{{ path('piedweb_cms_homepage') }}">A VOIR (le liens) Voir mes réservations</a></p>
+        </div>
+    </section>
+{% endblock %}

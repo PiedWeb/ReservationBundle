@@ -1,0 +1,11 @@
+sonata_admin:
+    dashboard:
+        groups:
+            app.admin.group.reservation:
+                label: Réservations
+                label_catalogue: Réservations
+                items:
+                    - piedweb.admin.product
+                    - piedweb.admin.order
+                    - piedweb.admin.orderItem
+                    - piedweb.admin.basketItem

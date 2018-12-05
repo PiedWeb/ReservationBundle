@@ -1,0 +1,13 @@
+{% extends '@!PiedWebCMS/page/_header.html.twig' %}
+
+{% block header_button %}
+    {% if page.issetProduct is defined and page.issetProduct %}
+        {% if page.issetFaq is defined and page.issetFaq %}
+            <a href="#faq" class="btn btn-outline-light">{{ 'reservation.questions'|trans }}</a>
+        {% endif %}
+        <a href="{% if page.issetProducts == false %}{{ path('piedweb_reservation', {'id' : page.products.0.id}) }}{% else %}#reserve{% endif %}" class="btn btn-light letter-spacing">{{ 'reservation.reserve'|trans }}</a>
+        {% if page.issetImage is defined and page.issetImage %}
+            <a href="#gallery" class="btn btn-outline-light">{{ 'reservation.photos'|trans }}</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

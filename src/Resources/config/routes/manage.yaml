@@ -1,0 +1,8 @@
+
+
+piedweb_reservation_order_invoice:
+    path:     /invoice/{id}
+    controller: PiedWeb\ReservationBundle\Controller\ManageController::showInvoice
+    methods:    [GET, HEAD]
+    requirements:
+        id: '[0-9]+'

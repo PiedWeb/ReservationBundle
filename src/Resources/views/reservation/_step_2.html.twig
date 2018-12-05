@@ -1,0 +1,10 @@
+<h2 class="mb-20">Êtes-vous déjà sortis en montagne avec nous ?</h2>
+
+{{ form_start(form) }}
+    <div>
+        <button type="submit" id="form_oui" name="form[oui]" class="btn btn-primary btn">Oui <i class="fa fa-arrow-right"></i> Se connecter</button>
+        <button type="submit" id="form_non" name="form[non]" class="btn btn-success btn">Non <i class="fa fa-arrow-right"></i> S'inscrire</button>
+    </div>
+
+    {{ form_widget(form._token) }}
+</form>

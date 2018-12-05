@@ -1,0 +1,38 @@
+
+
+<h2 class="mb-20">Nombre de participants</h2>
+
+<h3 class="mb-10">Je réserve pour</h3>
+
+{{ form_start(form) }}
+
+<div class="mb-20">
+     {{ form_row(form.number, {
+            label: 'Nombre de participants',
+            label_attr: {class: 'sr-only'},
+            attr: {
+                class: "form-control form-control-lg custom-control-inline",
+                style: "max-width:100px"
+            }
+        }) }}
+</div>
+
+<div class="custom-control custom-checkbox mb-20">
+    {{ form_widget(form.forMe, {
+            label: 'Je ne suis pas participant, je réserve cette sortie pour une ou plusieurs autres personnes.',
+            label_attr: {class: 'custom-control-label look-disabled small'},
+            attr: {class: "custom-control-input"}
+    }) }}
+</div>
+
+<p>La suite de la réservation se déroule en 4 étapes (environ 5 minutes). <br>Elle nous permet de receuillir les informations essentielles pour cette sortie.</p>
+
+<div>
+  <button type="submit" class="btn btn-success btn-lg">Valider</button>
+</div>
+<div class="d-none">{{ form_rest(form) }}</div>
+
+{{ form_end(form) }}
+<br><br><br>
+{# todo: disabled text color #}
+<p class=disabled><small>Réservation<br>&laquo;&nbsp;{{ product.name }}&nbsp;&raquo;</small></p>

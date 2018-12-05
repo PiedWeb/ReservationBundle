@@ -1,0 +1,33 @@
+{
+    "name": "piedweb/reservation-bundle",
+    "type": "symfony-bundle",
+    "description": "Transform your CMS in a reservation platform.",
+    "keywords": [],
+    "homepage": "https://piedweb.com",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "piedweb/cms-bundle": "dev-master",
+        "symfony/finder": "^4.1"
+    },
+    "require-dev": {
+        "symfony/test-pack": "dev-master",
+        "symfony/framework-bundle": "^4.1",
+        "symfony/yaml": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PiedWeb\\ReservationBundle\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Robin D.",
+            "email": "contact@robin-d.fr",
+            "homepage": "https://www.robin-d.fr/"
+        }
+    ]
+}

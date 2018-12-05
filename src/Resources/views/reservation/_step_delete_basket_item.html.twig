@@ -1,0 +1,17 @@
+<div>
+   <p>Vous vous apprétez à retirer un participant {{ firstname is not null ? '(' ~ firstname ~ ')' : '' }} de votre réservation ?</p>
+
+    {{ form_start(form) }}
+
+                <button class="btn btn-danger" id=oui name="form[oui]">
+                    Confirmer
+                </button>
+
+                <button class="btn btn-primary" id="non" name="form[non]">
+                    Annuler
+                </button>
+
+        {{ form_widget(form._token) }}
+    </form>
+
+</div>
