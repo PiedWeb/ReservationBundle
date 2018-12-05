@@ -21,7 +21,7 @@ class Order
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

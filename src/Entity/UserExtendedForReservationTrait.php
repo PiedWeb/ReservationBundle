@@ -4,6 +4,8 @@ namespace PiedWeb\ReservationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 trait UserExtendedForReservationTrait
 {
@@ -77,6 +79,50 @@ trait UserExtendedForReservationTrait
      * @ORM\OneToOne(targetEntity="PiedWeb\ReservationBundle\Entity\BasketInterface", mappedBy="user", cascade={"persist", "remove"})
      */
     private $basket;
+
+
+    /**
+     * @ORM\OneToMany(
+     *      targetEntity="PiedWeb\ReservationBundle\Entity\OrderInterface",
+     *      mappedBy="user",
+     *      orphanRemoval=true,
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    private $orders;
+
+
+    /**
+     * @return Collection|Orders[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders === null ? new ArrayCollection() : $this->orders;
+    }
+
+    public function addOrder($order): self
+    {
+        if (!$this->getOrders()->contains($order)) {
+            $this->orders[] = $order;
+            $order->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder($order): self
+    {
+        if ($this->getOrders()->contains($order)) {
+            $this->orders->removeElement($order);
+            // set the owning side to null (unless already changed)
+            if ($order->getUser() === $this) {
+                $order->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 
     public function getFirstname(): ?string
     {

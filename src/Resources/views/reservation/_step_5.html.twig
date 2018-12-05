@@ -3,33 +3,7 @@
     <div class="col-sm-12 col-md-7">
         <h2 class="mb-40">Récapitulatif</h2>
 
-        <div>
-            <h3 class="mt-20 mb-10">Détails</h3>
-            <table class=table>
-                <tr>
-                    <th>Réservation</th>
-                    <th>Prix</th>
-                </tr>
-            {% for productName, basketItems in (basket.basketItems is defined ? basket.basketItems : basket.orderItems)|group_by(=> _.product.name) %}
-                <tr>
-                    <td colspan="2" class="font-weight-bold">{{ productName }}</td>
-                </tr>
-                {% for p in basketItems %}
-                <tr>
-                    <td>
-                        {{ p.firstname }} {{ p.lastname }} {% if p.dateOfBirth is not null %}<br>
-                        <small>Date de naissance: {{ p.dateOfBirth|date("d/m/Y") }}) {% endif %}</small><br>
-                        <small>Contact: {{ p.email }} / {{ p.phone }}</small><br>
-                        <small><a href="{{ path('piedweb_reservation_delete_basket_item', {id: p.id, from: 5}) }}" class=text-color><i class="fa fa-trash"></i> Enlever</a></small>
-                    </td>
-                    <td style="vertical-align: middle;">{{ p.price }}€</td>
-                </tr>
-                {% endfor %}
-            {% endfor %}
-            </table>
-
-            <p><a href="{{ path('piedweb_reservation_step_4') }}">Modifier</a></p>
-        </div>
+        {% include '@PiedWebReservation/reservation/_table_basketItems.html.twig' %}
 
         <div class="mb-10">
             <h3 class="mt-20 mb-10">Informations</h3>

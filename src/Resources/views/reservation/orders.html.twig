@@ -1,0 +1,54 @@
+{% extends '@PiedWebReservation/reservation/reservation.html.twig' %}
+
+{% block title %}{{ 'orders.title'|trans }}{% endblock %}
+
+
+
+{% block content %}
+<section class="mt-20">
+    <div class="container">
+    <div class="row m-5">
+        <div class="col-12 col-sm-6"><h1>{{ 'orders.title'|trans }}</h1></div>
+
+        <div class="col-12 col-sm-6 text-right">
+            {% if user.basket.basketItems.count == 0 %}
+                <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-outline-primary disabled">Aucune réservation en cours</a>
+            {% else %}
+                <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-outline-primary">Une réservation non-finalisée</a>
+            {% endif %}
+
+        </div>
+    </div>
+    {% if orders is empty %}
+        <p class="alert alert-warning">Aucune réservation finalisée</p>
+        <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-warning">Voir mes réservations en cours</a>
+    {% else %}
+        {% for order in orders %}
+            <div class="card mb-5">
+                <div class="card-header">
+                   <strong>{{ order.orderedAt|localizeddate('long', 'none') }} à {{ order.orderedAt|date("G:i") }}</strong>
+                </div>
+                <div class="card-body">
+
+                    {% if order.paidAt %}
+                        <div>Payé le {{ order.paidAt|localizeddate('long', 'none') }}</div>
+                    {% else %}
+                        <div class="alert alert-warning p-4 txt-lg">
+                            En attente de paiement
+                            <a href="{{ path('piedweb_reservation_step_5_bis', {'id': order.id}) }}" class="btn btn-warning text-uppercase float-right"><i class="fa fa-credit-card"></i> Payer</a>
+                        </div>
+                    {% endif %}
+
+                    {% include '@PiedWebReservation/reservation/_table_basketItems.html.twig' with { basket: order } only %}
+
+                    <div>
+                        <a href="{{ path('piedweb_cms_homepage') }}#contact" class="btn btn-secondary">Signaler un changement</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+</section>
+
+{% endblock %}

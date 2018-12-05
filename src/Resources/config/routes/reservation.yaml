@@ -18,7 +18,9 @@ piedweb_reservation_step_2:
         id: '[0-9]+'
 
 piedweb_reservation_step_3_register:
-    path:     /reservation/register/
+    path:
+        en: /reservation/register/
+        fr: /reservation/inscription/
     controller: PiedWeb\ReservationBundle\Controller\ReservationController::step_3_register
     methods:    [GET, HEAD, POST]
 

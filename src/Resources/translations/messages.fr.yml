@@ -22,6 +22,9 @@ invoice:
     total_vat:  Total TVA
     description: Description
 
+orders:
+    title: Mes réservations
+
 user:
     city:
         short: Trop court

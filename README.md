@@ -1,5 +1,5 @@
 <p align="center"><a href="https://piedweb.com">
-<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="theme devoluix bootstrap 4" />
+<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PiedWeb.com" />
 </a></p>
 
 # Reservation Bundle
@@ -53,16 +53,14 @@ TODO: How to avoid to create bundle entity ?
 - manage way of paiement (global and per product)
 - manage confirmation mail
 
-- Gérer
--- Mon panier
--- Mes commandes
-
 - vérifier si la date de naissance, ça marche ! (user, basket, order)
 
 
 ### Later
 
 - translate
+
+- pager for Orders.html.twig
 
 - filtering by date (in admin) and default filtering for active products
 - archive basket item for non user after a while => via a command line

@@ -7,6 +7,7 @@ use PiedWeb\CMSBundle\Entity\UserInterface as User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as aSecurity;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class ManageController extends AbstractController
 {
@@ -70,36 +71,15 @@ class ManageController extends AbstractController
         return $this->render('@PiedWebReservation/reservation/invoice.html.twig', $data);
     }
 
-    public function showBasket(): Response
+    public function showOrders(): Response
     {
         $user = $this->getUser();
-        $basket = $user->getBasket();
+        $orders = $user->getOrders();
 
-        if ($basket->getBasketItems()->isEmpty()) {
-            return $this->render('@PiedWebReservation/reservation/no_reservation.html.twig');
-        }
-
-        foreach ($basket->getBasketItems() as $basketItem) {
-            if (!$this->doesThisBasketItemCompleted($basketItem)) {
-                return $this->redirectToRoute('piedweb_reservation_step_4');
-            }
-        }
-
-        $form = $this->createFormBuilder()
-            ->add('creditcard', SubmitType::class)
-            ->add('espece', SubmitType::class)
-            ->getForm();
-
-        $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
-        if ($form->isSubmitted() && $form->isValid()) {
-            $order = $this->createOrder($form);
-            if (false !== $order) {
-                return $this->redirectToRoute('piedweb_reservation_step_6', ['id' => $order->getId()]);
-            }
-        }
-
-        $data = ['step' => 5, 'form' => $form->createView(), 'basket' => $basket];
-
-        return $this->render('@PiedWebReservation/reservation/reservation.html.twig', $data);
+        $data = [
+            'orders' => $orders,
+            'user' => $user,
+        ];
+        return $this->render('@PiedWebReservation/reservation/orders.html.twig', $data);
     }
 }
