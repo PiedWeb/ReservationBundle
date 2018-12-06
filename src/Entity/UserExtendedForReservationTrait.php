@@ -58,7 +58,7 @@ trait UserExtendedForReservationTrait
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
      * @Assert\LessThan(
-     *      value = "-1 years",
+     *      value = "-3 day",
      *      message = "user.dateOfBirth.young"
      * )
      */

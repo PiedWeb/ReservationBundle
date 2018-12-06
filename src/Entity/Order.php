@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="`Order`")
  */
-class Order
+class Order implements OrderInterface
 {
     /**
      * @ORM\Id()

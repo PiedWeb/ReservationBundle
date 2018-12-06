@@ -27,7 +27,7 @@
                    <div>{{'admin.user.email.label'|trans }}: {{ order.user.email }}</div>
                    <div>{{'admin.user.phone.label'|trans }}: {{ order.user.phone }}</div>
                 </div>
-                <div class="mt-2"><strong>{{ 'invoice.reference'|trans }}</strong>: #{{ order.id }}</div>
+                <div class="mt-2"><strong>{{ 'invoice.reference'|trans }}</strong>: {{ order.id }}-{{ order.orderedAt|date('Y-md') }}</div>
             </div>
             <div class="col-sm-6" style="background-color:#F5F5F5; border-radius:5px;border:2px solid #D3D3D3; padding: 10px;-webkit-print-color-adjust: exact;">
                <div>

@@ -21,6 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as aSecurity;
 use Doctrine\ORM\EntityManagerInterface;
+use PiedWeb\ReservationBundle\Mailer\Mailer;
 
 class ReservationController extends AbstractController
 {
@@ -29,12 +30,18 @@ class ReservationController extends AbstractController
     protected $requestStack;
     protected $em;
     protected $eventDispatcher;
+    protected $mailer;
 
-    public function __construct(EntityManagerInterface $em, RequestStack $requestStack, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
+        Mailer $mailer
+    ) {
         $this->requestStack = $requestStack;
         $this->em = $em;
         $this->eventDispatcher = $eventDispatcher;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -313,11 +320,13 @@ class ReservationController extends AbstractController
             } elseif ($espece) {
                 $order->setPaiementMethod(1);
                 $order->setPaid(false);
-                $this->sendConfirmationMail($order);
             }
 
             $this->getDoctrine()->getManager()->persist($order);
             $this->getDoctrine()->getManager()->flush();
+
+            // Send email to user
+            $this->mailer->sendReservationValidationMessage($order);
         } else {
             $this->addFlash(
                     'danger',
@@ -378,11 +387,6 @@ class ReservationController extends AbstractController
         return true;
     }
 
-    protected function sendConfirmationMail($order)
-    {
-        //todo
-    }
-
     /**
      * Etape 6 : Réserver avec succès.
      */
@@ -394,7 +398,7 @@ class ReservationController extends AbstractController
             $order->setPaid(true);
             $order->setPaiementMethod(2);
             $order->paidAt(new \DateTime());
-            $this->sendConfirmationMail($order);
+            $this->mailer->sendPaidWithSuccessMessage($order);
         } elseif (1 == 2) { // Reviens de paypal et c'est un pb
             $this->addFlash('danger', 'Le Paiement ne semble pas avoir fonctionné... A COMPLETER A VOIR');
         }

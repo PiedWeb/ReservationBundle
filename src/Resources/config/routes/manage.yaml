@@ -11,10 +11,14 @@ piedweb_reservation_order_invoice:
 
 piedweb_reservation_user_orders:
     path:
-        en: /orders/
-        fr: /reservations/
+        en: /orders/{id}
+        fr: /reservations/{id}
     controller: PiedWeb\ReservationBundle\Controller\ManageController::showOrders
     methods:    [GET, HEAD]
+    requirements:
+        id: '[0-9]+'
+    defaults:
+        id: null
 
 piedweb_reservation_user_profile:
     path:

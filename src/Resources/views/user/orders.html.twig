@@ -1,14 +1,25 @@
 {% extends '@PiedWebReservation/user/base.html.twig' %}
 
-{% block title %}{{ 'orders.title'|trans }}{% endblock %}
-{% block h1 %}{{ 'orders.title'|trans }}{% endblock %}
+{% block h1 %}
+    {% if id is null %}
+    {{ 'orders.title'|trans }}
+    {% else %}
+        &raquo; Réservation <em>{{ orders[0].id }}-{{ orders[0].orderedAt|date('Y-md') }}</em>
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ block('h1')|striptags }}
+{% endblock %}
 
 
 
 {% block mainContent %}
     {% if orders is empty %}
+
         <p class="alert alert-warning">Aucune réservation finalisée</p>
         <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-warning">Voir mes réservations en cours</a>
+
     {% else %}
         {% for order in orders %}
             <div class="card mb-5">
@@ -20,20 +31,35 @@
                     {% if order.paidAt %}
                         <div>Payé le {{ order.paidAt|localizeddate('long', 'none') }}</div>
                     {% else %}
-                        <div class="alert alert-warning p-4 txt-lg">
-                            En attente de paiement
-                            <a href="{{ path('piedweb_reservation_step_5_bis', {'id': order.id}) }}" class="btn btn-warning text-uppercase float-right"><i class="fa fa-credit-card"></i> Payer</a>
+                    <div class="alert alert-warning txt-lg row">
+                        <div class="col pt-1">En attente de paiement</div>
+                        <div class="col text-right">
+                            <a href="{{ path('piedweb_reservation_step_5_bis', {'id': order.id}) }}" class="btn btn-warning text-uppercase"><i class="fa fa-credit-card"></i> Payer</a>
                         </div>
+                    </div>
                     {% endif %}
 
                     {% include '@PiedWebReservation/reservation/_table_basketItems.html.twig' with { basket: order } only %}
 
                     <div>
-                        <a href="{{ path('piedweb_cms_homepage') }}#contact" class="btn btn-secondary">Signaler un changement</a>
+                        <a href="{{ path('piedweb_cms_homepage') }}#contact" class="btn btn-outline-secondary">Signaler un changement</a>
                     </div>
                 </div>
             </div>
         {% endfor %}
+
+        {% if id is not null %}
+<section class="section-gap" id="breadcrumb">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('piedweb_reservation_user_orders') }}">Mes réservations</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Détails</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+        {% endif %}
     {% endif %}
     </div>
 </section>

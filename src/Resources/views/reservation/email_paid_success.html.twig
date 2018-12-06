@@ -1,0 +1,13 @@
+{{ fromName }} » Confirmation de paiement
+
+
+<h3 style="color:{{ app_color }}">Confirmation de paiement</h3>
+
+<p>
+    Nous accusons-réception de votre paiement pour votre réservation n°<a style="color:{{ app_color }}" href="{{ path('piedweb_reservation_user_orders', {'id': order.id}) }}">{{ order.id }}-{{ order.orderedAt|date('Y-md') }}</a>.
+</p>
+
+<p>
+A bientôt,<br>
+<a href="{{ url('piedweb_cms_homepage') }}" style="color:{{ app_color }}; font-size:150%; text-decoration:none">{{ fromName }}</a>
+</p>

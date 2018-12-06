@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\OrderItemRepository")
  */
-class OrderItem
+class OrderItem implements OrderItemInterface
 {
     use OrderItemTrait;
     /**

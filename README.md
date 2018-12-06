@@ -50,13 +50,8 @@ TODO: How to avoid to create bundle entity ?
 
 
 ## TODO
-
 - test
-
 - manage way of paiement (global and per product)
-- manage confirmation mail
-
-- vérifier si la date de naissance, ça marche ! (user, basket, order)
 
 
 ### Later

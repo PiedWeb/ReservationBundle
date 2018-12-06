@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\BasketRepository")
  */
-class Basket
+class Basket implements BasketInterface
 {
     /**
      * @ORM\Id()

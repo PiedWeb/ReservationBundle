@@ -1,0 +1,29 @@
+{{ fromName }} » Confirmation de votre réservation
+
+
+<h3 style="color:{{ app_color }}; padding-bottom:0; margin-bottom:5px;">Confirmation de réservation</h3>
+<small>Réservation n°<a style="color:{{ app_color }}" href="{{ url('piedweb_reservation_user_orders', {'id': order.id}) }}">{{ order.id }}-{{ order.orderedAt|date('Y-md') }}</a></small><br><br>
+
+<p>
+Voici un récapitulatif de votre  réservation effectuée le {{ order.orderedAt|localizeddate('long', 'none') }} à {{ order.orderedAt|date("G:i") }} :<br>
+<a href="{{ url('piedweb_reservation_user_orders', {'id': order.id}) }}" style="color:{{ app_color }}">{{ url('piedweb_reservation_user_orders', {'id': order.id}) }}</a>
+</p>
+
+<p>
+Si vous souhaiter modifier votre réservation, vous pouvez nous envoyer un mail en précisant votre numéro de commande ({{ order.id }}-{{ order.orderedAt|date('Y-md') }} :<br>
+<a style="color:{{ app_color }}" href="mailto:{{ fromEmail }}?subject=Modifier la commande {{ order.id }}">{{ fromEmail }}</a>
+</p>
+
+{# todo : add related product  #}
+
+<table style="vertical-align:central;background:white;border-collapse:collapse; width:100%; max-width:300px;">
+    <tr>
+        <td style="width:50%"></td>
+    </tr>
+</table>
+
+
+<p>
+A bientôt,<br>
+<a href="{{ url('piedweb_cms_homepage') }}" style="color:{{ app_color }}; font-size:150%; text-decoration:none">{{ fromName }}</a>
+</p>

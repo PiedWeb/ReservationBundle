@@ -74,14 +74,24 @@ class ManageController extends AbstractController
     /**
      * @aSecurity("has_role('ROLE_USER')")
      */
-    public function showOrders(): Response
+    public function showOrders(?int $id): Response
     {
         $user = $this->getUser();
-        $orders = $user->getOrders();
+
+        if (null !== $id) {
+            $order = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_order'))->findOneById($id);
+            if (null === $order) {
+                throw $this->createNotFoundException();
+            }
+            $orders = [$order];
+        } else {
+            $orders = $user->getOrders();
+        }
 
         $data = [
             'orders' => $orders,
             'user' => $user,
+            'id' => $id,
         ];
 
         return $this->render('@PiedWebReservation/user/orders.html.twig', $data);

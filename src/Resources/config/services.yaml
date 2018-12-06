@@ -10,7 +10,7 @@ services:
     PiedWeb\ReservationBundle\:
         autowire: true
         resource: '../../../src/*'
-        exclude: '../../../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../../../src/{Mailer,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -39,12 +39,13 @@ services:
         autowire: true
         tags:
             - { name: kernel.event_subscriber }
-    # todo
-    #PiedWeb\ReservationBundle\EventListener\InteractiveLoginListener:
-        #autowire: true
-        #tags:
-            #- { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    piedweb_reservation.mailer:
+        class: PiedWeb\ReservationBundle\Mailer\Mailer
+        arguments: ['@mailer', '@router', '@templating', '%app.email_sender%', '%app.email_sender_name%']
+
+    PiedWeb\ReservationBundle\Mailer\Mailer:
+        alias: piedweb_reservation.mailer
 
 # --------
 # Admin

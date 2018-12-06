@@ -9,7 +9,15 @@
         </thead>
     {% for productName, basketItems in (basket.basketItems is defined ? basket.basketItems : basket.orderItems)|group_by(=> _.product.name) %}
         <tr>
-            <td colspan="2" class="font-weight-bold">{{ productName }}</td>
+            <td colspan="2" class="font-weight-bold">
+                {{ productName }}
+                {% if basketItems.0.product.page is not null %}
+                    <br>
+                    <small><a href="{{ path('piedweb_cms_page', {'slug': basketItems.0.product.page.realSlug}) }}" target="_blank">
+                        Détails <i class="fa fa-external-link"></i>
+                    </a></small>
+                {% endif %}
+            </td>
         </tr>
         {% for p in basketItems %}
         <tr>

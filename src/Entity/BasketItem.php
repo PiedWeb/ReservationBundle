@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\BasketItemRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class BasketItem
+class BasketItem implements BasketItemInterface
 {
     use OrderItemTrait;
 
