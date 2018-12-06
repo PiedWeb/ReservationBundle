@@ -3,6 +3,7 @@
 namespace PiedWeb\ReservationBundle\Mailer;
 
 use PiedWeb\ReservationBundle\Entity\OrderInterface;
+use PiedWeb\CMSBundle\Mailer\Mailer as BaseMailer;
 
 class Mailer extends BaseMailer
 {
@@ -13,7 +14,7 @@ class Mailer extends BaseMailer
                     'fromEmail' => $this->fromEmail,
                     'fromName' => $this->fromName,
                 ]);
-        $this->sendEmailMessage($rendered, $this->fromEmail, (string) $order->getUser()->getEmail());
+        $this->sendEmailMessage($rendered, (string) $order->getUser()->getEmail());
     }
 
     public function sendReservationValidationMessage(OrderInterface $order)
@@ -23,6 +24,6 @@ class Mailer extends BaseMailer
                     'fromEmail' => $this->fromEmail,
                     'fromName' => $this->fromName,
                 ]);
-        $this->sendEmailMessage($rendered, $this->fromEmail, (string) $order->getUser()->getEmail());
+        $this->sendEmailMessage($rendered, (string) $order->getUser()->getEmail());
     }
 }

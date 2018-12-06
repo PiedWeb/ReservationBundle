@@ -52,7 +52,7 @@ TODO: How to avoid to create bundle entity ?
 ## TODO
 - test
 - manage way of paiement (global and per product)
-
+- test with international and translate
 
 ### Later
 
