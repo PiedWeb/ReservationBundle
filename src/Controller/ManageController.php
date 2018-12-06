@@ -83,6 +83,15 @@ class ManageController extends AbstractController
             'orders' => $orders,
             'user' => $user,
         ];
-        return $this->render('@PiedWebReservation/reservation/orders.html.twig', $data);
+
+        return $this->render('@PiedWebReservation/user/orders.html.twig', $data);
+    }
+
+    /**
+     * @aSecurity("has_role('ROLE_USER')")
+     */
+    public function editMyInfo(): Response
+    {
+        return $this->showRegister(true);
     }
 }

@@ -56,8 +56,6 @@ TODO: How to avoid to create bundle entity ?
 - manage way of paiement (global and per product)
 - manage confirmation mail
 
-- Readme : si media n'est pas une image, comment y accéder ?
-
 - vérifier si la date de naissance, ça marche ! (user, basket, order)
 
 
@@ -92,8 +90,7 @@ TODO: How to avoid to create bundle entity ?
 
 Check coding standard before to commit :
 ```
-php-cs-fixer fix src --rules=@Symfony --verbose
-php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose
+php-cs-fixer fix src --rules=@Symfony --verbose && php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose
 ```
 
 

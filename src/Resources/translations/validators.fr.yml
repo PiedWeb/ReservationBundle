@@ -1,1 +1,17 @@
 
+user:
+    city:
+        short: Trop court
+        long: Trop long
+        invalid: Non valide
+    firstname:
+        invalid: Non valide
+    lastname:
+        short: Trop court
+        long: Trop long
+        invalid: Non valide
+    dateOfBirth:
+        young: Vous semblez trop jeune pour procéder à une réservation
+    phone:
+        short: Trop court
+        long: Trop long

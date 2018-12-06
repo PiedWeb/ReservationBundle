@@ -1,0 +1,40 @@
+{% extends '@PiedWebReservation/reservation/reservation.html.twig' %}
+
+{% block title %}{{ 'profile.title'|trans }}{% endblock %}
+
+{% block logo %}
+<a href="{{ path('piedweb_cms_homepage') }}">
+<span class="navbar-brand"></span>
+</a>
+{% endblock logo %}
+
+
+{% block content %}
+<section class="mt-20">
+    <div class="container">
+    <div class="row m-5">
+        <div class="col-12 col-md-4"><h5 class="mt-2">{% block h1 %}{{ 'profile.title'|trans }}{% endblock %}</h5></div>
+
+        <div class="col-12 col-md-8 text-right">
+
+
+            {% if user.basket.basketItems.count == 0 %}
+                <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-outline-primary disabled m-1"><i class="fa fa-bell-slash-o"></i> {{ 'profile.btn.no_reservation'|trans }}</a>
+            {% else %}
+                <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-outline-primary m-1"><i class="fa fa-bell-o"></i> {{ 'profile.btn.reservation_running'|trans }}</a>
+            {% endif %}
+
+            {% if step is defined %}
+                <a href="{{ path('piedweb_reservation_user_orders') }}" class="btn btn-lg btn-outline-success m-1"><i class="fa fa-thumb-tack"></i> {{ 'orders.title'|trans }}</a>
+            {% else %}
+                <a href="{{ path('piedweb_reservation_user_profile') }}" class="btn btn-lg btn-outline-info m-1"><i class="fa fa-user"></i>  {{ 'profile.title'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+    {% block mainContent %}
+
+    {% endblock %}
+    </div>
+</section>
+
+{% endblock %}

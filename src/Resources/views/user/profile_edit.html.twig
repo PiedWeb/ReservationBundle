@@ -1,0 +1,13 @@
+{% extends '@PiedWebReservation/user/base.html.twig' %}
+
+{% block title %}{{ 'profile.title'|trans }}{% endblock %}
+{% block h1 %}{{ 'profile.title'|trans }}{% endblock %}
+
+
+{% block mainContent %}
+<div class="text-left" style="max-width:250px; margin:auto; padding-top:20px; padding-bottom: 20px;">
+
+    {% include '@PiedWebReservation/user/_user_details_form.html.twig' %}
+
+</div>
+{% endblock  %}

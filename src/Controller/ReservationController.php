@@ -9,11 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormError;
 use PiedWeb\ReservationBundle\Entity\OrderInterface as Order;
@@ -21,12 +17,9 @@ use PiedWeb\ReservationBundle\Entity\ProductInterface as Product;
 use PiedWeb\ReservationBundle\Entity\BasketInterface as Basket;
 use PiedWeb\ReservationBundle\Entity\BasketItemInterface as BasketItem;
 use PiedWeb\CMSBundle\Entity\UserInterface as User;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as aSecurity;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ReservationController extends AbstractController
@@ -149,54 +142,7 @@ class ReservationController extends AbstractController
      */
     public function step_3_register(): Response
     {
-        // It may possible an User bypass detailled registration and we need to force hom
-        // to do it, else, we will not be able to do step 4.
-        $securityContext = $this->container->get('security.authorization_checker');
-        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            //return $this->redirectToRoute('piedweb_reservation_step_2', ['id' => $basket->getId()]);
-            $user = $this->getUser();
-        } else {
-            $userClass = $this->container->getParameter('app.entity_user');
-            $user = new $userClass();
-            $user->setEnabled(true);
-        }
-
-        $form = $this->createFormBuilder($user)
-            ->add('lastname', TextType::class)
-            ->add('firstname', TextType::class)
-            ->add('dateOfBirth', DateType::class, ['widget' => 'single_text', 'required' => false])
-            ->add('phone', TelType::class)
-            ->add('city', TextType::class)
-        ;
-
-        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $form
-                ->add('email', EmailType::class)
-                ->add('plainPassword', PasswordType::class, ['always_empty' => false])
-            ;
-        }
-
-        $form = $form->getForm();
-
-        $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Register
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
-
-            // Logged in
-            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-            $this->get('security.token_storage')->setToken($token);
-
-            $response = $this->redirectToRoute('piedweb_reservation_step_4', ['previous' => 3]);
-
-            // Transform basket from visitor to this user
-            $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $this->requestStack->getCurrentRequest(), $response));
-
-            return $response;
-        }
-
-        return $this->render('@PiedWebReservation/reservation/reservation.html.twig', ['step' => 3, 'form' => $form->createView()]);
+        return $this->showRegister();
     }
 
     /**
@@ -459,7 +405,6 @@ class ReservationController extends AbstractController
             ->getRepository($this->container->getParameter('app.entity_page'))
             ->findOneBySlug('step-6', $this->requestStack->getCurrentRequest()->getLocale())
         ;
-
 
         return $this->render('@PiedWebReservation/reservation/reservation.html.twig', $data);
     }

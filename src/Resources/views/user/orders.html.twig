@@ -1,29 +1,11 @@
-{% extends '@PiedWebReservation/reservation/reservation.html.twig' %}
+{% extends '@PiedWebReservation/user/base.html.twig' %}
 
 {% block title %}{{ 'orders.title'|trans }}{% endblock %}
+{% block h1 %}{{ 'orders.title'|trans }}{% endblock %}
 
 
-{% block logo %}
-<a href="{{ path('piedweb_cms_homepage') }}">
-<span class="navbar-brand"></span>
-</a>
-{% endblock logo %}
 
-{% block content %}
-<section class="mt-20">
-    <div class="container">
-    <div class="row m-5">
-        <div class="col-12 col-sm-6"><h1>{{ 'orders.title'|trans }}</h1></div>
-
-        <div class="col-12 col-sm-6 text-right">
-            {% if user.basket.basketItems.count == 0 %}
-                <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-outline-primary disabled">Aucune réservation en cours</a>
-            {% else %}
-                <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-outline-primary">Une réservation non-finalisée</a>
-            {% endif %}
-
-        </div>
-    </div>
+{% block mainContent %}
     {% if orders is empty %}
         <p class="alert alert-warning">Aucune réservation finalisée</p>
         <a href="{{ path('piedweb_reservation_step_5') }}" class="btn btn-lg btn-warning">Voir mes réservations en cours</a>

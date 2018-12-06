@@ -9,9 +9,16 @@ piedweb_reservation_order_invoice:
     requirements:
         id: '[0-9]+'
 
-piedweb_reservation_show_orders:
+piedweb_reservation_user_orders:
     path:
         en: /orders/
         fr: /reservations/
     controller: PiedWeb\ReservationBundle\Controller\ManageController::showOrders
     methods:    [GET, HEAD]
+
+piedweb_reservation_user_profile:
+    path:
+        en: /me/
+        fr: /moi/
+    controller: PiedWeb\ReservationBundle\Controller\ManageController::editMyInfo
+    methods:    [GET, HEAD, POST]

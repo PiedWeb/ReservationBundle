@@ -29,8 +29,8 @@ trait UserExtendedForReservationTrait
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
-     *      minMessage = "user.name.short",
-     *      maxMessage = "user.name.long"
+     *      minMessage = "user.lastname.short",
+     *      maxMessage = "user.lastname.long"
      * )
      * @Assert\Regex(
      *      pattern="/^([a-zA-Z\w\p{L}]+(?:. |-| |'))*[a-zA-Z\w\p{L}]*$/iu",
@@ -80,7 +80,6 @@ trait UserExtendedForReservationTrait
      */
     private $basket;
 
-
     /**
      * @ORM\OneToMany(
      *      targetEntity="PiedWeb\ReservationBundle\Entity\OrderInterface",
@@ -91,13 +90,12 @@ trait UserExtendedForReservationTrait
      */
     private $orders;
 
-
     /**
      * @return Collection|Orders[]
      */
     public function getOrders(): Collection
     {
-        return $this->orders === null ? new ArrayCollection() : $this->orders;
+        return null === $this->orders ? new ArrayCollection() : $this->orders;
     }
 
     public function addOrder($order): self
@@ -122,7 +120,6 @@ trait UserExtendedForReservationTrait
 
         return $this;
     }
-
 
     public function getFirstname(): ?string
     {
