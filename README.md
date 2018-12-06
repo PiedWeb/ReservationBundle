@@ -34,7 +34,10 @@ reservation:
 
 ## Usage
 
-...
+### Customize last step of tunner (paiement succed)
+
+By creating a page with `step-6` as slug. Only main content will be used.
+Think to disable publication by putting the creation date today + 100 years.
 
 
 ## Why
@@ -52,6 +55,8 @@ TODO: How to avoid to create bundle entity ?
 
 - manage way of paiement (global and per product)
 - manage confirmation mail
+
+- Readme : si media n'est pas une image, comment y accéder ?
 
 - vérifier si la date de naissance, ça marche ! (user, basket, order)
 

@@ -71,6 +71,9 @@ class ManageController extends AbstractController
         return $this->render('@PiedWebReservation/reservation/invoice.html.twig', $data);
     }
 
+    /**
+     * @aSecurity("has_role('ROLE_USER')")
+     */
     public function showOrders(): Response
     {
         $user = $this->getUser();

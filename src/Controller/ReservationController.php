@@ -455,6 +455,12 @@ class ReservationController extends AbstractController
 
         $data = ['step' => 6];
 
+        $data['page'] = $this->em
+            ->getRepository($this->container->getParameter('app.entity_page'))
+            ->findOneBySlug('step-6', $this->requestStack->getCurrentRequest()->getLocale())
+        ;
+
+
         return $this->render('@PiedWebReservation/reservation/reservation.html.twig', $data);
     }
 
