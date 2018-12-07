@@ -1,0 +1,22 @@
+payum:
+    storages:
+        Payum\Core\Model\Payment:
+            filesystem:
+                storage_dir: '%kernel.root_dir%/../var/Payment'
+                id_property: number
+
+    security:
+        token_storage:
+            Payum\Core\Model\Token:
+                filesystem:
+                    storage_dir: '%kernel.root_dir%/../var/PaymentToken'
+                    id_property: hash
+
+
+    gateways:
+        paypal_checkout_button:
+            # https://developer.paypal.com/docs/checkout/integrate/#4-test-it
+            factory: paypal_express_checkout
+            #username: ''
+            #password: ''
+            #signature: ''

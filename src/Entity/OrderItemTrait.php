@@ -84,7 +84,7 @@ trait OrderItemTrait
 
     public function getHumanId()
     {
-        return $this->getProduct()->getName().' ('.$this->getFirstname().' '.$this->getLastname().')';
+        return null !== $this->getProduct() ? $this->getProduct()->getName().' ('.$this->getFirstname().' '.$this->getLastname().')' : '';
     }
 
     public function getProduct()

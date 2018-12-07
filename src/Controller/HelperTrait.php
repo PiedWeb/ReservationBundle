@@ -5,6 +5,7 @@ namespace PiedWeb\ReservationBundle\Controller;
 use PiedWeb\ReservationBundle\Entity\ProductInterface as Product;
 use PiedWeb\ReservationBundle\Entity\BasketInterface as Basket;
 use PiedWeb\CMSBundle\Entity\UserInterface as User;
+use PiedWeb\CMSBundle\Entity\OrderInterface as Order;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,11 @@ trait HelperTrait
     protected $newCookie;
 
     protected $cookieBasket = 'piedweb_basket';
+
+    /**
+     * @var array
+     */
+    protected $paymentMethods = [];
 
     /**
      * @throw NotFoundHttpException
@@ -165,5 +171,37 @@ trait HelperTrait
             'form' => $form->createView(),
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @return array
+     *
+     * @param Order|Basket $order Perm
+     */
+    protected function getPaymentMethods($order = null)
+    {
+        /*
+         * That's very opinionated, i could replace it per a new field in Order wich permit to choose
+         * the paiement method
+         */
+        if (null !== $order) {
+            if (0 === $order->getPrice()) {
+                $free = new \PiedWeb\ReservationBundle\PaymentMethod\Free();
+
+                return [
+                    $free->getId() => new \PiedWeb\ReservationBundle\PaymentMethod\Free(),
+                ];
+            }
+        }
+
+        if (empty($this->paymentMethods)) {
+            $paymentMethods = explode('|', $this->container->getParameter('app.payment_method'));
+            foreach ($paymentMethods as $paymentMethod) {
+                $p = new $paymentMethod();
+                $this->paymentMethods[$p->getId()] = $p;
+            }
+        }
+
+        return $this->paymentMethods;
     }
 }

@@ -1,0 +1,16 @@
+payum_all:
+    resource: "@PayumBundle/Resources/config/routing/all.xml"
+
+
+
+piedweb_reservation_payment_done:
+    path:     /reservation/payment/done
+    controller: PiedWeb\ReservationBundle\Controller\PaymentController::captureDoneAction
+    methods:    [GET]
+
+piedweb_reservation_payment_paypal_checkout_express:
+    path:     /reservation/payment/{id}/paypal-checkout-express
+    controller: PiedWeb\ReservationBundle\Controller\PaymentController::preparePaypalCheckoutButton
+    methods:    [GET]
+    requirements:
+        id: '[0-9]+'

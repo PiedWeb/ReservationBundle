@@ -23,7 +23,7 @@ class OrderItem implements OrderItemInterface
     private $canceledAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\ReservationBundle\Entity\OrderInterface", inversedBy="orderItem")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\ReservationBundle\Entity\OrderInterface", inversedBy="orderItems")
      * @ORM\JoinColumn(nullable=false)
      */
     private $order;

@@ -17,6 +17,14 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder
             ->root('piedweb_reservation')
                 ->children()
+                    ->arrayNode('payment_method')
+                        ->prototype('scalar')->end()
+                        ->defaultValue([
+                            'PiedWeb\ReservationBundle\PaymentMethod\PaypalCheckoutExpress',
+                            'PiedWeb\ReservationBundle\PaymentMethod\Cash',
+                        ])
+                        //->end()
+                    ->end()
                     ->scalarNode('entity_product')->defaultValue('PiedWeb\ReservationBundle\Entity\Product')->cannotBeEmpty()->end()
                     ->scalarNode('entity_order')->defaultValue('PiedWeb\ReservationBundle\Entity\Order')->cannotBeEmpty()->end()
                     ->scalarNode('entity_order_item')->defaultValue('PiedWeb\ReservationBundle\Entity\OrderItem')->cannotBeEmpty()->end()

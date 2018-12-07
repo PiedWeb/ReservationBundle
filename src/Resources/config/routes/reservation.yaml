@@ -2,6 +2,8 @@
 
 manage:
     resource: '@PiedWebReservationBundle/Resources/config/routes/manage.yaml'
+payum:
+    resource: '@PiedWebReservationBundle/Resources/config/routes/payum.yaml'
 
 piedweb_reservation:
     path:     /reservation/1/{id}

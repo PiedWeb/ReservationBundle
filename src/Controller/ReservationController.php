@@ -3,7 +3,6 @@
 namespace PiedWeb\ReservationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Method;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -269,29 +268,24 @@ class ReservationController extends AbstractController
             }
         }
 
-        $form = $this->createFormBuilder()
-            ->add('creditcard', SubmitType::class)
-            ->add('espece', SubmitType::class)
-            ->getForm();
+        $form = $this->getPaymentForm($basket);
 
-        $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
-        if ($form->isSubmitted() && $form->isValid()) {
-            $order = $this->createOrder($form);
-            if (false !== $order) {
-                return $this->redirectToRoute('piedweb_reservation_step_6', ['id' => $order->getId()]);
-            }
+        if ('Symfony\Component\Form\Form' != get_class($form)) {
+            return $form; // it's a redirection for next step
         }
 
-        $data = ['step' => 5, 'form' => $form->createView(), 'basket' => $basket];
+        $data = [
+            'step' => 5,
+            'form' => $form->createView(),
+            'paymentMethods' => $this->getPaymentMethods($basket),
+            'basket' => $basket,
+        ];
 
         return $this->render('@PiedWebReservation/reservation/reservation.html.twig', $data);
     }
 
     protected function createOrder($form)
     {
-        $espece = $form->get('espece')->isClicked();
-        $creditcard = $form->get('creditcard')->isClicked();
-
         foreach ($this->getUser()->getBasket()->getBasketItems() as $basketItem) {
             $participantNumber = $basketItem->getProduct()->getParticipantNumber();
             $participantsCount = $basketItem->getProduct()->getParticipants()->count();
@@ -310,27 +304,24 @@ class ReservationController extends AbstractController
             }
         }
 
-        if ($espece || $creditcard) {
-            $order = $this->basketToOrder($this->getUser()->getBasket());
-
-            if ($creditcard) {
-                $order->setPaiementMethod(2);
+        $isClicked = false;
+        foreach ($this->getPaymentMethods() as $paymentMethod) {
+            if ($form->get($paymentMethod->getHumanId())->isClicked()) {
+                $isClicked = $paymentMethod->getId();
+                $order = $this->basketToOrder($this->getUser()->getBasket());
+                $order->setPaymentMethod($paymentMethod->getId());
                 $order->setPaid(false);
-            // todo: redirection vers PAYAPL (ou autre)
-            } elseif ($espece) {
-                $order->setPaiementMethod(1);
-                $order->setPaid(false);
+                $this->getDoctrine()->getManager()->persist($order);
+                $this->getDoctrine()->getManager()->flush();
+                $this->mailer->sendReservationValidationMessage($order);
+                break;
             }
+        }
 
-            $this->getDoctrine()->getManager()->persist($order);
-            $this->getDoctrine()->getManager()->flush();
-
-            // Send email to user
-            $this->mailer->sendReservationValidationMessage($order);
-        } else {
+        if (!$isClicked) {
             $this->addFlash(
                     'danger',
-                    $this->get('translator')->trans('paiementMethod.invalid')
+                    $this->get('translator')->trans('paymentMethod.invalid')
                 );
 
             return false;
@@ -393,15 +384,6 @@ class ReservationController extends AbstractController
     public function step_6(int $id): Response
     {
         $order = $this->getOrder($id);
-
-        if (1 == 2) { // Reviens de paypal et c'est OK
-            $order->setPaid(true);
-            $order->setPaiementMethod(2);
-            $order->paidAt(new \DateTime());
-            $this->mailer->sendPaidWithSuccessMessage($order);
-        } elseif (1 == 2) { // Reviens de paypal et c'est un pb
-            $this->addFlash('danger', 'Le Paiement ne semble pas avoir fonctionné... A COMPLETER A VOIR');
-        }
 
         $data = ['step' => 6];
 
@@ -469,26 +451,55 @@ class ReservationController extends AbstractController
             return $this->render('@PiedWebReservation/reservation/ever_paid.html.twig');
         }
 
-        $form = $this->getPaiementForm();
+        $form = $this->getPaymentForm($order);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // todo: redirect to paiement method
-            return $this->redirectToRoute('piedweb_reservation_step_6', ['id' => $order->getId()]);
+        if ('Symfony\Component\Form\Form' != get_class($form)) {
+            return $form; // it's a redirection for next step
         }
 
-        $data = ['step' => 5, 'form' => $form->createView(), 'basket' => $order];
+        $data = [
+            'step' => 5,
+            'form' => $form->createView(),
+            'basket' => $order,
+            'paymentMethods' => $this->getPaymentMethods($order),
+        ];
 
         return $this->render('@PiedWebReservation/reservation/reservation.html.twig', $data);
     }
 
-    protected function getPaiementForm()
+    /**
+     * @param Order|Basket $basket
+     */
+    protected function getPaymentForm($basket)
     {
-        $form = $this->createFormBuilder()
-            ->add('creditcard', SubmitType::class)
-            ->add('espece', SubmitType::class)
-            ->getForm();
+        $form = $this->createFormBuilder();
+        foreach ($this->getPaymentMethods($basket) as $paymentMethod) {
+            $form->add($paymentMethod->getHumanId(), SubmitType::class);
+        }
+        $form = $form->getForm();
 
         $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($basket instanceof Basket) {
+                $order = $this->createOrder($form);
+            } else {
+                $isOrder = true;
+                $order = $basket;
+            }
+
+            if (false !== $order) {
+                foreach ($this->getPaymentMethods($basket) as $paymentMethod) {
+                    if ($form->get($paymentMethod->getHumanId())->isClicked()) {
+                        if (isset($isOrder) && $isOrder) {
+                            $order->setPaymentMethod($paymentMethod->getId());
+                            $this->getDoctrine()->getManager()->flush();
+                        }
+
+                        return $this->redirectToRoute($paymentMethod->getRedirectRoute(), ['id' => $order->getId()]);
+                    }
+                }
+            }
+        }
 
         return $form;
     }

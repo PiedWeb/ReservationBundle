@@ -6,7 +6,7 @@
 
 Transform your [PiedWeb CMS](https://github.com/PiedWeb/CMS) in a reservation platform.
 
-This bundle provide a complete order process manager (product, basket, order, paiement).
+This bundle provide a complete order process manager (product, basket, order, payment).
 
 ## Installation
 
@@ -28,17 +28,44 @@ reservation:
 # Edit config/bundles.php and reorder with this in first:
     PiedWeb\ReservationBundle\PiedWebReservationBundle::class => ['all' => true],
 # (because now, we use app.entity_order in CMSBundle and we need to load ReservationBundle's config before)
+
+# Config payum's gateways in `config/packages/payum.yaml` (eg :
+payum:
+    gateways:
+        paypal_checkout_button:
+            # https://developer.paypal.com/docs/checkout/integrate/#4-test-it
+            factory: paypal_express_checkout
+            #username: ''
+            #password: ''
+            #signature: ''
+            #sandbox: true
+
 ```
 
 
 
 ## Usage
 
-### Customize last step of tunner (paiement succed)
+### Customize last step of tunner (reservation succeed)
 
 By creating a page with `step-6` as slug. Only main content will be used.
 Think to disable publication by putting the creation date today + 100 years.
 
+### Add a new Paiment Method
+
+- Create Payment Method. See `src/PaymentMethod` for exemple.
+- Create Payment Controller Action See `src/Controller/PaymentController.php` for exemple.
+- Create the corresponding twig file in your `templates/bundles/PiedWebReservationBundle/PaymentMethod/`**`HumanId`**`.html.twig`
+
+- Edit config :
+```
+piedweb_reservation:
+    ...
+    payment_method:
+        - PiedWeb\ReservationBundle\PaymentMethod\PaypalCheckoutExpress
+        - PiedWeb\ReservationBundle\PaymentMethod\Cash
+        - YourNewMethodClass
+```
 
 ## Why
 
@@ -51,7 +78,7 @@ TODO: How to avoid to create bundle entity ?
 
 ## TODO
 - test
-- manage way of paiement (global and per product)
+- Add other way of payment (currently managed : paypal express checkout)
 - test with international and translate
 
 ### Later

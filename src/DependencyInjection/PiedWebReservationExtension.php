@@ -24,6 +24,9 @@ class PiedWebReservationExtension extends Extension //implements PrependExtensio
 
         // Better idea to get config everywhere ?
         foreach ($config as $key => $value) {
+            if ('payment_method' == $key) {
+                $value = implode('|', $value);
+            }
             $container->setParameter('app.'.$key, $value);
         }
 

@@ -13,7 +13,7 @@
           {% if order.paidAt %}
             {{ ('invoice.paid'|trans)~' '~order.paidAt|localizeddate('long', 'none') }}
           {% else %}
-            <a href="{{ path('piedweb_reservation_step_5_bis', {'id': order.id}) }}">{{ 'invoice.waitingForPaiement'|trans }}</a>
+            <a href="{{ path('piedweb_reservation_step_5_bis', {'id': order.id}) }}">{{ 'invoice.waitingForPayment'|trans }}</a>
           {%endif %}
       </div>
       <div class="card-body">

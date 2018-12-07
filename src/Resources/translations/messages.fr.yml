@@ -1,4 +1,4 @@
-paiementMethod:
+paymentMethod:
     invalid: Avez-vous selectionner un des moyens de paiment proposés ? (si l'erreur persiste, contactez-nous)
 
 reservation:
@@ -7,12 +7,14 @@ reservation:
     photos: Photos
     faq: Questions
     full: Malheuresement, il n'y a plus de place. Quelqu'un a peut-être été plus rapide dans le processus de paiment.<br><a href="/#contact" data-todo>Contactez-nous pour trouver une autre solution</a>.
+    back_home: Voir les prochaines sorties
+    my_orders: Voir mes réservations
 
 invoice:
     reference: Référence
     title: Facture à l'attention de
     paid:  Payé
-    waitingForPaiement: En attente de paiement
+    waitingForPayment: En attente de paiement
     unit_price_ht: Prix Unitaire HT
     vat: TVA
     unit_price: Prix Unitaire
@@ -22,13 +24,25 @@ invoice:
     total_vat:  Total TVA
     description: Description
 
+
 orders:
     title: Mes réservations
+
+payment:
+    success: Le Paiement a été enregistré avec succès !
+    error: Le Paiement ne semble pas avoir fonctionné
+    retry: Réessayer
 
 profile:
     title: Mes informations
     btn.no_reservation: Aucune réservation en attente de paiement
     btn.reservation_running: Une réservation à finaliser !
+
+# copy-paste from choices
+choices:
+    free: Gratuit
+    cash: Espèce
+    paypal_checkout_express: Paypal (Express)
 
 admin:
     product:
@@ -80,7 +94,7 @@ admin:
             label: Utilisateur
         orderItem:
             label: Sorties Réservées
-        paiementMethod:
+        paymentMethod:
             label: Moyen de paiement
         paid:
             label: Payé

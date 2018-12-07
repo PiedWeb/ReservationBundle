@@ -8,12 +8,20 @@
     "minimum-stability": "dev",
     "require": {
         "piedweb/cms-bundle": "dev-master",
-        "symfony/finder": "^4.1"
+        "payum/payum-bundle": "^2.3",
+        "payum/paypal-express-checkout-nvp": "^1",
+        "php-http/guzzle6-adapter": "^2",
+        "symfony/finder": "^4"
     },
     "require-dev": {
         "symfony/test-pack": "dev-master",
-        "symfony/framework-bundle": "^4.1",
-        "symfony/yaml": "^4.1"
+        "symfony/framework-bundle": "^4",
+        "symfony/yaml": "^4"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "mkdir var/Payment && mkdir var/PaymentToken"
+        ]
     },
     "autoload": {
         "psr-4": {

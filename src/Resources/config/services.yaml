@@ -60,6 +60,8 @@ services:
     piedweb.admin.order:
         class: PiedWeb\ReservationBundle\Admin\OrderAdmin
         arguments: [~, PiedWeb\ReservationBundle\Entity\Order, ~]
+        calls:
+            - [ setTranslator, [ '@translator' ] ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: admin.label.order }
         public: true

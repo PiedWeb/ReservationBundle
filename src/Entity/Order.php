@@ -34,17 +34,12 @@ class Order implements OrderInterface
      *      cascade={"persist", "remove"}
      * )
      */
-    private $orderItem;
+    private $orderItems;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $paiementMethod;
-
-    public static $paiementMethodList = [
-        1 => 'Espèces (Paiement le jour de la sortie en liquide)',
-        2 => 'Paypal (Carte de crédit)',
-    ];
+    private $paymentMethod;
 
     /**
      * @ORM\Column(type="datetime")
@@ -100,7 +95,7 @@ class Order implements OrderInterface
 
     public function __construct()
     {
-        $this->orderItem = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getPrice(): float
@@ -134,17 +129,17 @@ class Order implements OrderInterface
     }
 
     /**
-     * @return Collection|OrderItem[]
+     * @return Collection|OrderItems[]
      */
     public function getOrderItems(): Collection
     {
-        return $this->orderItem;
+        return $this->orderItems;
     }
 
     public function addOrderItem($orderItem): self
     {
-        if (!$this->orderItem->contains($orderItem)) {
-            $this->orderItem[] = $orderItem;
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
             $orderItem->setOrder($this);
         }
 
@@ -153,8 +148,8 @@ class Order implements OrderInterface
 
     public function removeOrderItem($orderItem): self
     {
-        if ($this->orderItem->contains($orderItem)) {
-            $this->orderItem->removeElement($orderItem);
+        if ($this->orderItems->contains($orderItem)) {
+            $this->orderItems->removeElement($orderItem);
             // set the owning side to null (unless already changed)
             if ($orderItem->getOrder() === $this) {
                 $orderItem->setOrder(null);
@@ -164,14 +159,14 @@ class Order implements OrderInterface
         return $this;
     }
 
-    public function getPaiementMethod(): ?int
+    public function getPaymentMethod(): ?int
     {
-        return $this->paiementMethod;
+        return $this->paymentMethod;
     }
 
-    public function setPaiementMethod(int $paiementMethod): self
+    public function setPaymentMethod(int $paymentMethod): self
     {
-        $this->paiementMethod = $paiementMethod;
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }

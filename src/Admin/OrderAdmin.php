@@ -16,11 +16,38 @@ use PiedWeb\ReservationBundle\Entity\Order;
 
 class OrderAdmin extends AbstractAdmin
 {
+    protected $trans;
     protected $datagridValues = [
         '_page' => 1,
         '_sort_order' => 'DESC',
         '_sort_by' => 'orderedAt',
     ];
+
+    protected $paymentMethods = [];
+
+    public function setTranslator($trans)
+    {
+        $this->trans = $trans;
+    }
+
+    /**
+     * if needed elsewhere, create a service.
+     */
+    public function getAllPaymentMethods($translate = true)
+    {
+        if (empty($this->paymentMethods)) {
+            $free = new \PiedWeb\ReservationBundle\PaymentMethod\Free();
+            $this->paymentMethods[$free->getId()] = $translate ? $this->trans->trans('choices.'.$free->getHumanId()) : $free->getHumanId();
+
+            $paymentMethods = explode('|', $this->getConfigurationPool()->getContainer()->getParameter('app.payment_method'));
+            foreach ($paymentMethods as $paymentMethod) {
+                $p = new $paymentMethod();
+                $this->paymentMethods[$p->getId()] = $translate ? $this->trans->trans('choices.'.$p->getHumanId()) : $p->getHumanId();
+            }
+        }
+
+        return $this->paymentMethods;
+    }
 
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -31,7 +58,7 @@ class OrderAdmin extends AbstractAdmin
             'label' => 'admin.order.user.label',
             'help' => 'admin.order.user.help',
         ]);
-        $formMapper->add('orderItem', ModelAutocompleteType::class, [
+        $formMapper->add('orderItems', ModelAutocompleteType::class, [
             'required' => false,
             'multiple' => true,
             'class' => OrderItem::class,
@@ -45,10 +72,10 @@ class OrderAdmin extends AbstractAdmin
         $formMapper->end();
 
         $formMapper->with('admin.order.details', ['class' => 'col-md-3 order-2']);
-        $formMapper->add('paiementMethod', ChoiceType::class, [
+        $formMapper->add('paymentMethod', ChoiceType::class, [
             'required' => false,
-            'choices' => array_flip(Order::$paiementMethodList),
-            'label' => 'admin.order.paiementMethod.label',
+            'choices' => array_flip($this->getAllPaymentMethods()),
+            'label' => 'admin.order.paymentMethod.label',
         ]);
         $formMapper->add('paid', ChoiceType::class, [
             'required' => false,
@@ -82,11 +109,14 @@ class OrderAdmin extends AbstractAdmin
         $datagridMapper->add('user', null, [
             'label' => 'admin.order.user.label',
         ]);
-        $datagridMapper->add('orderItem.product.name', null, [
+        $datagridMapper->add('orderItems.product.name', null, [
             'label' => 'admin.order.orderItem.label',
         ]);
-        $datagridMapper->add('paiementMethod', null, [
-            'label' => 'admin.order.paiementMethod.label',
+        $datagridMapper->add('paymentMethod', 'doctrine_orm_choice', [
+            'label' => 'admin.order.paymentMethod.label',
+        ], ChoiceType::class, [
+            'translation_domain' => 'choices',
+            'choices' => array_flip($this->getAllPaymentMethods()),
         ]);
         $datagridMapper->add('paid', null, [
             'label' => 'admin.order.paid.label',
@@ -115,8 +145,10 @@ class OrderAdmin extends AbstractAdmin
             // 'template' => 'todo' // pour éviter d'avoir une colonne dégueulasse avec 20 réservations pour la même sortie
         ]);
         */
-        $listMapper->add('paiementMethod', null, [
-            'label' => 'admin.order.paiementMethod.label',
+        $listMapper->add('paymentMethod', 'choice', [
+            'choices' => $this->getAllPaymentMethods($translate = true),
+            'label' => 'admin.order.paymentMethod.label',
+            // todo: show human
         ]);
         $listMapper->add('paid', null, [
             'label' => 'admin.order.paid.label',

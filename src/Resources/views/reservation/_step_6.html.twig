@@ -1,4 +1,4 @@
-<p class="alert alert-success">Un e-mail récapitulant votre réservation vient de vous être envoyé. Nous vous remercions pour votre réservation. Vous pouvez également retrouver celle-ci dans votre espace &laquo <a href="{{ path('piedweb_reservation_user_orders') }}">Mes Réservations</a> &raquo;.</p>
+<p>Un e-mail récapitulant votre réservation vient de vous être envoyé. Nous vous remercions pour votre réservation. Vous pouvez également retrouver celle-ci dans votre espace &laquo <a href="{{ path('piedweb_reservation_user_orders') }}">Mes Réservations</a> &raquo;.</p>
 
 {% if page is not null  %}
     {% set mainContent = page.mainContentIsMarkdown ? page.mainContent|markdown : page.mainContent  %}

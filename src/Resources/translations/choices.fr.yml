@@ -1,0 +1,5 @@
+
+choices:
+    free: Gratuit
+    cash: Espèce
+    paypal_checkout_express: Paypal (Express)

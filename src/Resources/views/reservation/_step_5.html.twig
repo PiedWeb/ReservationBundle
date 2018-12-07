@@ -24,22 +24,10 @@
         {{ form_start(form) }}
         <div class="mb-40 mt-40">
 
-
-            <div class="col-sm-12">
-                <small>Paiement immédiat via Paypal :</small>
-                <button class="btn btn-primary text-center" id="form_creditcard" name="form[creditcard]" style="width:100%;font-size:24px !important">
-                    <span class="p-i cb-icon"></span>
-                    <i class="fa fa-credit-card"></i> <br> Carte de Crédit
-                </button>
-            </div>
-            <br>
-            <div class="col-sm-12">
-                <small>Paiement le jour de la sortie:</small>
-                <button class="btn btn-secondary text-center" id="form_espece" name="form[espece]" style="font-size:24px !important;width:100%">
-                    <span class="p-i espece-icon"></span> {# todo btn btn-link #}
-                    <i class="fa fa-money"></i> <br> Espèce
-                </button>
-            </div>
+            {% for paymentMethod in paymentMethods %}
+                {% include '@PiedWebReservation/PaymentMethod/' ~ paymentMethod.humanId ~ '.html.twig' %}
+                <br>
+            {% endfor %}
 
         </div>
         {{ form_widget(form._token) }}
