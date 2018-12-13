@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\BasketRepository")
+ * @ORM\MappedSuperclass
  */
 class Basket implements BasketInterface
 {
@@ -16,17 +16,17 @@ class Basket implements BasketInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\ReservationBundle\Entity\BasketItemInterface", mappedBy="basket")
      */
-    private $basketItems;
+    protected $basketItems;
 
     /**
      * @ORM\OneToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface", inversedBy="basket", cascade={"persist", "remove"})
      */
-    private $user;
+    protected $user;
 
     public function __construct()
     {

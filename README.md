@@ -18,8 +18,7 @@ composer require piedweb/reservation-bundle
 
 # Set basic conf:
 
-# Edit entity in `config/packages/piedweb_cms.yaml` and replace CMSBundle per ReservationBundle
-# and transform Page to PageReservation (see why)
+# Copy files from install to your src folder (erase)
 
 # Add route in `config/routes.yaml`
 reservation:
@@ -67,13 +66,7 @@ piedweb_reservation:
         - YourNewMethodClass
 ```
 
-## Why
 
-- Why Entity\PageReservation and not Entity\Page ?
-Because piedweb cms class are created in entity so i can't use the same name
-TODO: How to avoid to create bundle entity ?
-1. Use abstract class like FOSUser => but more configuration is required (create child class in app/entity)
-2. How Sulyus is doing ?
 
 
 ## TODO

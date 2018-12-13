@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PiedWeb\CMSBundle\Entity\PageInterface;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\ProductRepository")
+ * @ORM\MappedSuperclass
  */
 class Product implements ProductInterface
 {
@@ -19,42 +19,42 @@ class Product implements ProductInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", inversedBy="products")
      */
-    private $page;
+    protected $page;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $departureDate;
+    protected $departureDate;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $time;
+    protected $time;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $participantNumber;
+    protected $participantNumber;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $specifications;
+    protected $specifications;
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\ReservationBundle\Entity\OrderItemInterface", mappedBy="product")
      */
-    private $participants;
+    protected $participants;
 
     public function __construct()
     {

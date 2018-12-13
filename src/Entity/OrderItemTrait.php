@@ -13,14 +13,14 @@ trait OrderItemTrait
      * @ORM\ManyToOne(targetEntity="PiedWeb\ReservationBundle\Entity\ProductInterface")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product;
+    protected $product;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
      * @Assert\LessThan("-1 years")
      */
-    private $dateOfBirth;
+    protected $dateOfBirth;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -31,7 +31,7 @@ trait OrderItemTrait
      *      maxMessage = "Votre prénom semble trop long"
      * )
      */
-    private $firstname;
+    protected $firstname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -42,7 +42,7 @@ trait OrderItemTrait
      *      maxMessage = "Votre prénom semble trop long"
      * )
      */
-    private $lastname;
+    protected $lastname;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -54,7 +54,7 @@ trait OrderItemTrait
      *      maxMessage = "Votre numéro de téléphone semble trop long"
      * )
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -64,7 +64,7 @@ trait OrderItemTrait
      *     checkMX = true
      * )
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -75,7 +75,7 @@ trait OrderItemTrait
      *      maxMessage = "Le nom de votre ville semble trop long"
      * )
      */
-    private $city;
+    protected $city;
 
     public function __toString()
     {

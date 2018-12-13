@@ -13,11 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\CMSBundle\Repository\PageRepository")
- * @ORM\Table(name="page_reservation")
+ * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
-class PageReservation implements TranslatableInterface, PageInterface
+class Page implements TranslatableInterface, PageInterface
 {
     use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, TranslatableTrait, PageReservationTrait;
 

@@ -5,7 +5,7 @@ namespace PiedWeb\ReservationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\OrderItemRepository")
+ * @ORM\MappedSuperclass
  */
 class OrderItem implements OrderItemInterface
 {
@@ -15,24 +15,24 @@ class OrderItem implements OrderItemInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $canceledAt;
+    protected $canceledAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\ReservationBundle\Entity\OrderInterface", inversedBy="orderItems")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $order;
+    protected $order;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\ReservationBundle\Entity\ProductInterface", inversedBy="participants")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product;
+    protected $product;
 
     public function getId(): ?int
     {

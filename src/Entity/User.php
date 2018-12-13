@@ -11,8 +11,7 @@ use PiedWeb\CMSBundle\Entity\UserInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="user_reservation") // aie aie aie
+ * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("email",
  *     message="user.email.already_used"

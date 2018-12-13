@@ -22,7 +22,7 @@ trait UserExtendedForReservationTrait
      *      message = "user.firstname.invalid"
      * )
      */
-    private $firstname;
+    protected $firstname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -37,7 +37,7 @@ trait UserExtendedForReservationTrait
      *      message = "user.lastname.invalid"
      * )
      */
-    private $lastname;
+    protected $lastname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -52,7 +52,7 @@ trait UserExtendedForReservationTrait
      *      message = "user.city.invalid"
      * )
      */
-    private $city;
+    protected $city;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -62,7 +62,7 @@ trait UserExtendedForReservationTrait
      *      message = "user.dateOfBirth.young"
      * )
      */
-    private $dateOfBirth;
+    protected $dateOfBirth;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -73,12 +73,12 @@ trait UserExtendedForReservationTrait
      *      maxMessage = "user.phone.long"
      * )
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @ORM\OneToOne(targetEntity="PiedWeb\ReservationBundle\Entity\BasketInterface", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $basket;
+    protected $basket;
 
     /**
      * @ORM\OneToMany(
@@ -88,7 +88,7 @@ trait UserExtendedForReservationTrait
      *      cascade={"persist", "remove"}
      * )
      */
-    private $orders;
+    protected $orders;
 
     /**
      * @return Collection|Orders[]

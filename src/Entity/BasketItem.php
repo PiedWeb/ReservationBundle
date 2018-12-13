@@ -5,7 +5,7 @@ namespace PiedWeb\ReservationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\BasketItemRepository")
+ * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
 class BasketItem implements BasketItemInterface
@@ -17,22 +17,22 @@ class BasketItem implements BasketItemInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $addedAt;
+    protected $addedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\ReservationBundle\Entity\BasketInterface", inversedBy="basketItems")
      */
-    private $basket;
+    protected $basket;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $forMe;
+    protected $forMe;
 
     /**
      * @ORM\PrePersist

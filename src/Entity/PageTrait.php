@@ -13,9 +13,9 @@ trait PageTrait
      * @ORM\OneToMany(targetEntity="PiedWeb\ReservationBundle\Entity\ProductInterface", mappedBy="page")
      * @ORM\OrderBy({"departureDate" = "DESC"})
      */
-    private $products;
+    protected $products;
 
-    private $activeProducts;
+    protected $activeProducts;
 
     public function __construct_product()
     {

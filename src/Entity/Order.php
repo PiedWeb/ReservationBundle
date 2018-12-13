@@ -7,9 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\ReservationBundle\Repository\OrderRepository")
+ * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
- * @ORM\Table(name="`Order`")
  */
 class Order implements OrderInterface
 {
@@ -18,13 +17,13 @@ class Order implements OrderInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\OneToMany(
@@ -34,38 +33,38 @@ class Order implements OrderInterface
      *      cascade={"persist", "remove"}
      * )
      */
-    private $orderItems;
+    protected $orderItems;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $paymentMethod;
+    protected $paymentMethod;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $orderedAt;
+    protected $orderedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $canceledAt;
+    protected $canceledAt;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $refund;
+    protected $refund;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * todo: supprimer cet élément
      */
-    private $paid;
+    protected $paid;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $paidAt;
+    protected $paidAt;
 
     public function __toString()
     {
