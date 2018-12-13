@@ -10,7 +10,7 @@ services:
     PiedWeb\ReservationBundle\:
         autowire: true
         resource: '../../../src/*'
-        exclude: '../../../src/{Mailer,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../../../src/{Repository,Mailer,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -46,6 +46,35 @@ services:
 
     PiedWeb\ReservationBundle\Mailer\Mailer:
         alias: piedweb_reservation.mailer
+
+# --------
+# Repository
+# --------
+
+    PiedWeb\ReservationBundle\Repository\BasketRepository:
+        arguments: ['@doctrine', '%app.entity_basket%']
+        tags:
+            - { name: doctrine.repository_service }
+
+    PiedWeb\ReservationBundle\Repository\BasketItemRepository:
+        arguments: ['@doctrine', '%app.entity_basket_item%']
+        tags:
+            - { name: doctrine.repository_service }
+
+    PiedWeb\ReservationBundle\Repository\OrderRepository:
+        arguments: ['@doctrine', '%app.entity_order%']
+        tags:
+            - { name: doctrine.repository_service }
+
+    PiedWeb\ReservationBundle\Repository\OrderItemRepository:
+        arguments: ['@doctrine', '%app.entity_order_item%']
+        tags:
+            - { name: doctrine.repository_service }
+
+    PiedWeb\ReservationBundle\Repository\ProductRepository:
+        arguments: ['@doctrine', '%app.entity_product%']
+        tags:
+            - { name: doctrine.repository_service }
 
 # --------
 # Admin
