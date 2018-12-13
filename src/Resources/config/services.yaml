@@ -82,13 +82,13 @@ services:
 
     piedweb.admin.product:
         class: PiedWeb\ReservationBundle\Admin\ProductAdmin
-        arguments: [~, PiedWeb\ReservationBundle\Entity\Product, ~]
+        arguments: [~, '%app.entity_product%', ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: admin.label.product }
         public: true
     piedweb.admin.order:
         class: PiedWeb\ReservationBundle\Admin\OrderAdmin
-        arguments: [~, PiedWeb\ReservationBundle\Entity\Order, ~]
+        arguments: [~, '%app.entity_order%', ~]
         calls:
             - [ setTranslator, [ '@translator' ] ]
         tags:
@@ -96,13 +96,13 @@ services:
         public: true
     piedweb.admin.orderItem:
         class: PiedWeb\ReservationBundle\Admin\OrderItemAdmin
-        arguments: [~, PiedWeb\ReservationBundle\Entity\OrderItem, ~]
+        arguments: [~, '%app.entity_order_item%', ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: admin.label.orderItem }
         public: true
     piedweb.admin.basketItem:
         class: PiedWeb\ReservationBundle\Admin\BasketItemAdmin
-        arguments: [~, PiedWeb\ReservationBundle\Entity\BasketItem, ~]
+        arguments: [~, '%app.entity_basket_item%', ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: admin.label.basket }
         public: true
